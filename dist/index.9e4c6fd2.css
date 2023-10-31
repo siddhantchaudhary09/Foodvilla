@@ -1,0 +1,21 @@
+.header {
+  border: 1px solid #000;
+  justify-content: space-between;
+  margin: 10px;
+  display: flex;
+}
+
+.header > ul {
+  list-style: none;
+  display: flex;
+}
+
+.header > ul > li {
+  padding: 10px;
+}
+
+.logo {
+  width: 100px;
+}
+
+/*# sourceMappingURL=index.9e4c6fd2.css.map */
