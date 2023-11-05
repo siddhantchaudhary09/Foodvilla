@@ -1,22 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { restaurantlist } from "./constants";
 
 const Body = () => {
   function filter(SearchText, restaurants) {
-    const filterdata = restaurants.filter((restaurant) => {
-      restaurant.info.name.includes(SearchText);
-    });
-    return filterdata;
+    return restaurants.filter((restaurant) =>
+      restaurant?.info.name.toLowerCase().includes(SearchText.toLowerCase())
+    );
   }
   const [SearchText, setSearchText] = useState("");
-  const [restaurants, setrestaurant] = useState(restaurantlist);
+  const [allrestaurants, setallrestaurant] = useState(restaurantlist);
+  const [filteredrestaurant, setfilteredrestaurant] = useState(restaurantlist);
 
-  const Restaurantcard = ({
-    cuisines,
-    cloudinaryImageId,
-    name,
-    costForTwo,
-  }) => {
+  async function getRestaurant() {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.29844139999999&lng=77.99313599999999&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json1 = await data.json();
+
+    console.log("render()");
+
+    setallrestaurant(
+      json1?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
+    );
+    setfilteredrestaurant(
+      json1?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
+    );
+  }
+  useEffect(() => {
+    getRestaurant();
+  }, []);
+
+  const Restaurantcard = ({ cuisine, cloudinaryImageId, name, costForTwo }) => {
     return (
       <div className="card">
         <img
@@ -33,7 +49,7 @@ const Body = () => {
   };
 
   return (
-    <div>
+    <>
       <div className="Searchcont">
         <input
           type="text"
@@ -47,8 +63,9 @@ const Body = () => {
         <button
           className="searchbtn"
           onClick={() => {
-            const data = filter(SearchText, restaurants);
-            setrestaurant(data);
+            const filterdata = filter(SearchText, allrestaurants);
+            console.log(filterdata);
+            setfilteredrestaurant(filterdata);
           }}
         >
           Search
@@ -57,7 +74,7 @@ const Body = () => {
         {/* Restaurant body */}
       </div>
       <div className="restaurantbody">
-        {restaurants.map((restaurant) => {
+        {filteredrestaurant.map((restaurant) => {
           return (
             <Restaurantcard
               {...restaurant.info}
@@ -66,7 +83,7 @@ const Body = () => {
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
 
