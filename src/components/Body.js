@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { restaurantlist } from "./constants";
+// import { restaurantlist } from "./constants";
+import Shimmer from "./shimmer";
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import Restaurantcard from "./Restaurantcard";
 
 const Body = () => {
   function filter(SearchText, restaurants) {
@@ -8,8 +12,8 @@ const Body = () => {
     );
   }
   const [SearchText, setSearchText] = useState("");
-  const [allrestaurants, setallrestaurant] = useState(restaurantlist);
-  const [filteredrestaurant, setfilteredrestaurant] = useState(restaurantlist);
+  const [allrestaurants, setallrestaurant] = useState([]);
+  const [filteredrestaurant, setfilteredrestaurant] = useState([]);
 
   async function getRestaurant() {
     const data = await fetch(
@@ -20,11 +24,11 @@ const Body = () => {
     console.log("render()");
 
     setallrestaurant(
-      json1?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+      json1?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
     setfilteredrestaurant(
-      json1?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+      json1?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
   }
@@ -32,26 +36,19 @@ const Body = () => {
     getRestaurant();
   }, []);
 
-  const Restaurantcard = ({ cuisine, cloudinaryImageId, name, costForTwo }) => {
-    return (
-      <div className="card">
-        <img
-          src={
-            "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" +
-            cloudinaryImageId
-          }
-        />
-        <h2>{name}</h2>
+  if (!allrestaurants) return null;
 
-        <h4>Price: {costForTwo}</h4>
-      </div>
-    );
-  };
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus == false)
+    return <h1>You are offline!! Please check internet</h1>;
 
-  return (
+  return allrestaurants.length == 0 ? (
+    <Shimmer />
+  ) : (
     <>
-      <div className="Searchcont">
+      <div className=" m-4 p-4">
         <input
+          className="border border-solid border-black rounded-md"
           type="text"
           placeholder="Search"
           value={SearchText}
@@ -61,7 +58,7 @@ const Body = () => {
         />
 
         <button
-          className="searchbtn"
+          className="px-4 py-2 bg-green-100 rounded-md m-4 "
           onClick={() => {
             const filterdata = filter(SearchText, allrestaurants);
             console.log(filterdata);
@@ -70,16 +67,17 @@ const Body = () => {
         >
           Search
         </button>
-
-        {/* Restaurant body */}
       </div>
-      <div className="restaurantbody">
+
+      <div className="flex flex-wrap">
         {filteredrestaurant.map((restaurant) => {
           return (
-            <Restaurantcard
-              {...restaurant.info}
+            <Link
+              to={"/restaurant/" + restaurant.info.id}
               key={restaurant.info.parentId}
-            />
+            >
+              <Restaurantcard {...restaurant.info} />
+            </Link>
           );
         })}
       </div>
