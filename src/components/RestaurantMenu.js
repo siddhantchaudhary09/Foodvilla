@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import Shimmer from "./shimmer";
+import Shimmer from "./Shimmer";
 import { CdnUrl, MenuUrl } from "./constants";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 
