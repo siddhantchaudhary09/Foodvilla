@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import Restaurantcard from "./Restaurantcard";
+import Restaurantcard, { withPromotedLabel } from "./Restaurantcard";
 
 const Body = () => {
   function filter(SearchText, restaurants) {
@@ -14,6 +14,7 @@ const Body = () => {
   const [SearchText, setSearchText] = useState("");
   const [allrestaurants, setallrestaurant] = useState([]);
   const [filteredrestaurant, setfilteredrestaurant] = useState([]);
+  const Restauantcardpromoted = withPromotedLabel(Restaurantcard);
 
   async function getRestaurant() {
     const data = await fetch(
@@ -21,7 +22,7 @@ const Body = () => {
     );
     const json1 = await data.json();
 
-    console.log("render()");
+    console.log(json1.info);
 
     setallrestaurant(
       json1?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
@@ -36,7 +37,8 @@ const Body = () => {
     getRestaurant();
   }, []);
 
-  if (!allrestaurants) return null;
+  // if (!allrestaurants) return null;
+  // if (!filteredrestaurant) return null;
 
   const onlineStatus = useOnlineStatus();
   if (onlineStatus == false)
@@ -46,9 +48,9 @@ const Body = () => {
     <Shimmer />
   ) : (
     <>
-      <div className=" m-4 p-4">
+      <div className=" ml-[40%] p-4 ">
         <input
-          className="border border-solid border-black rounded-md"
+          className="border border-solid border-black rounded-md "
           type="text"
           placeholder="Search"
           value={SearchText}
@@ -69,18 +71,22 @@ const Body = () => {
         </button>
       </div>
 
-      <div className="flex flex-wrap">
-        {filteredrestaurant.map((restaurant) => {
-          return (
-            <Link
-              to={"/restaurant/" + restaurant.info.id}
-              key={restaurant.info.parentId}
-            >
-              <Restaurantcard {...restaurant.info} />
-            </Link>
-          );
-        })}
-      </div>
+      {filteredrestaurant == 0 ? (
+        <h1> NO Restaurants Matched</h1>
+      ) : (
+        <div className="flex flex-wrap">
+          {filteredrestaurant.map((restaurant) => {
+            return (
+              <Link
+                to={"/restaurant/" + restaurant.info.id}
+                key={restaurant.info.parentId}
+              >
+                <Restaurantcard {...restaurant.info} />
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 };

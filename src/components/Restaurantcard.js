@@ -15,4 +15,15 @@ const Restaurantcard = ({ cuisine, cloudinaryImageId, name, costForTwo }) => {
   );
 };
 
+export const withPromotedLabel = (Restaurantcard) => {
+  return () => {
+    return (
+      <Div>
+        <label>Promoted</label>
+        <Restaurantcard />
+      </Div>
+    );
+  };
+};
+
 export default Restaurantcard;

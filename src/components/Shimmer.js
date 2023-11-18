@@ -1,7 +1,21 @@
 const Shimmer = () => {
   return (
-    <div>
-      <h1> shimmer is here</h1>
+    <div className="flex flex-wrap">
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
+      <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200"></div>
     </div>
   );
 };
