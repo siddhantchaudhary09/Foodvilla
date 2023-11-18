@@ -1,6 +1,6 @@
 const Restaurantcard = ({ cuisine, cloudinaryImageId, name, costForTwo }) => {
   return (
-    <div className="m-4 p-4 w-[250] h-72 bg-gray-100 rounded-md hover:bg-gray-200">
+    <div className="m-4 p-4 w-[250px]  h-72 bg-gray-100 rounded-md hover:bg-gray-200">
       <img
         className=" rounded-md"
         src={
@@ -18,10 +18,10 @@ const Restaurantcard = ({ cuisine, cloudinaryImageId, name, costForTwo }) => {
 export const withPromotedLabel = (Restaurantcard) => {
   return () => {
     return (
-      <Div>
+      <div>
         <label>Promoted</label>
         <Restaurantcard />
-      </Div>
+      </div>
     );
   };
 };
