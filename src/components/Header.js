@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [isLoggedin, setlogin] = useState(false);
+  const cartitems = useSelector((store) => store.cart.items);
   return (
     <div className="flex justify-between bg-gray-300">
       <img src={logo} className="w-24" alt="logo" />
@@ -19,7 +21,9 @@ const Header = () => {
           <li>
             <Link to="/about">About</Link>
           </li>
-          <li>Cart</li>
+          <li className=" font-bold text-xl ">
+            <Link to="/cart">Cart ({cartitems.length} items)</Link>
+          </li>
         </ul>
 
         <div>
