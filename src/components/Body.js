@@ -25,11 +25,11 @@ const Body = () => {
     console.log(json1.info);
 
     setallrestaurant(
-      json1?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+      json1?.data?.cards[6]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
     setfilteredrestaurant(
-      json1?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+      json1?.data?.cards[6]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
   }
@@ -43,7 +43,7 @@ const Body = () => {
   const onlineStatus = useOnlineStatus();
   if (onlineStatus == false)
     return <h1>You are offline!! Please check internet</h1>;
-  const restaurantlength = allrestaurants.length;
+  const restaurantlength = allrestaurants?.length;
 
   return restaurantlength == 0 ? (
     <Shimmer />
@@ -76,7 +76,7 @@ const Body = () => {
         <h1> NO Restaurants Matched</h1>
       ) : (
         <div className="flex flex-wrap">
-          {filteredrestaurant.map((restaurant) => {
+          {filteredrestaurant?.map((restaurant) => {
             return (
               <Link
                 to={"/restaurant/" + restaurant.info.id}
